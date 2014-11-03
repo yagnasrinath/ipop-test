@@ -32,47 +32,47 @@ Usage instruction
 
 2. download test.py script 
 
-```
-wget https://github.com/ipop-project/ipop-test/raw/master/test.py
-chmod +x test.py
-```
+  ```
+  wget https://github.com/ipop-project/ipop-test/raw/master/test.py
+  chmod +x test.py
+  ```
 
 3. Install XMPP and LXC in VM
-```
-python -m unittest -v test.TestInstall
-```
+  ```
+  python -m unittest -v test.TestInstall
+  ```
 
-This command should complete with this output
-```
-----------------------------------------------------------------------
-Ran 2 tests in 86.865s
+  This command should complete with this output
+  ```
+  ----------------------------------------------------------------------
+  Ran 2 tests in 86.865s
 
-OK
-```
+  OK
+  ```
 
 4. Create LXC isntances 
 
-The number of LXC can be specified in the script. 
-instance_count : number of LXC instances
-ipop_download_link : URL link for ipop-download
-ipop_dir : directory name of IPOP after extraction
+  The number of LXC can be specified in the script. 
+  instance_count : number of LXC instances
+  ipop_download_link : URL link for ipop-download
+  ipop_dir : directory name of IPOP after extraction
 
-```
-vi test.py
+  ```
+  vi test.py
 
-instance_count = 3
-ipop_download_link = "https://github.com/ipop-project/downloads/releases/"+\
+  instance_count = 3
+  ipop_download_link = "https://github.com/ipop-project/downloads/releases/"+\
                      "download/14.07.1.rc2/ipop-14.07.1.rc2-x86_ubuntu.tar.gz"
-ipop_dir = "ipop-14.07.1.rc2-x86_ubuntu"
-```
+  ipop_dir = "ipop-14.07.1.rc2-x86_ubuntu"
+  ```
 
-```
-python -m unittest -v test.TestLxcCreate
-```
+  ```
+  python -m unittest -v test.TestLxcCreate
+  ```
 
 5. Choose the test class you want and run it 
-```
-python -m unittest -v test.TestSocialVPN
-```
+  ```
+  python -m unittest -v test.TestSocialVPN
+  ```
 
 
