@@ -5,23 +5,28 @@ ipop-test provides test harness for ipop and helps deploying multiple ipop-nodes
 
 
 TEST CLASSES
-============
+------------
 
 At this point, there are three test classes. TestInstall and TestLxcCreate classes are the prerequisite class, so you need to run these two classes before other test class. 
 
-1. TestInstall
+- **TestInstall**
+
   Install XMPP and LXC.
-2. TestLxcCreate
+- **TestLxcCreate**
+
   Create LXC instances 
-3. TestSocialVPN
+  
+- **TestSocialVPN**
+
   TestInstall and TestLxcCreate should had run once before this test. This test send ping packet from one node to all the other nodes. For example, if instance_count is set 5, 5 lxc instances created and each instance sends ping to all the other ipop-nodes. In total, 20 differeng ping command runs. 
+  
 ...
 
 We plan to add more complex and thorough test scenarios alongside with script implementation.
 
 
 Usage instruction
-=================
+-----------------
 
 1. Prepare a blank VM(Ubuntu is preferred)
 
