@@ -1,24 +1,25 @@
 ipop-test
 =========
 
-ipop-test provides test harness for ipop and helps deploying multiple ipop-nodes in cluster environment. It leverages python unittes framework (https://docs.python.org/2/library/unittest.html). With this script, you can deploy and run multiple ipop-nodes in blank VM. 
+ipop-test provides test harness for ipop and helps deploying multiple ipop-nodes in cluster environment. It leverages python unittest framework (https://docs.python.org/2/library/unittest.html). With this script, you can deploy and run multiple ipop-nodes in a single blank VM. 
 
 
 TEST CLASSES
 ------------
 
-At this point, there are three test classes. TestInstall and TestLxcCreate classes are the prerequisite class, so you need to run these two classes before other test class. 
+At this point, there are three test classes. TestInstall and TestLxcCreate classes are the prerequisite classes, so you need to run these two classes before other test class. 
 
 - **TestInstall**
 
-  Install XMPP and LXC.
+  Install XMPP and LXC in VM.
+  
 - **TestLxcCreate**
 
-  Create LXC instances 
+  Create LXC instances. The number of instances can be specified in script(instance_count). 
   
 - **TestSocialVPN**
 
-  TestInstall and TestLxcCreate should had run once before this test. This test send ping packet from one node to all the other nodes. For example, if instance_count is set 5, 5 lxc instances created and each instance sends ping to all the other ipop-nodes. In total, 20 differeng ping command runs. 
+  TestInstall and TestLxcCreate should had run once before this test. This test send ping packet from one node to all the other nodes. For example, if instance_count is set 5, 5 lxc instances created and each instance sends ping to all the other ipop-nodes. In total, 20 different ping command runs. 
   
 ...
 
@@ -70,7 +71,8 @@ Usage instruction
   python -m unittest -v test.TestLxcCreate
   ```
 
-5. Choose the test class you want and run it 
+5. Choose the test class you want and run it. For example, TestSocialVPN test class runs SociapVPN ipop in each LXC instances and sends ping from one node to all the other node one by one. This should completes with "OK". 
+
   ```
   python -m unittest -v test.TestSocialVPN
   ```
