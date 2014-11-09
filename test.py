@@ -95,6 +95,12 @@ class TestSocialVPN(unittest.TestCase):
         config["xmpp_host"] = "10.0.3.1"
         config["ip4"] = "172.31.0.100"
 
+        idu = subprocess.Popen(["id", "-un", stdout=subprocess.PIPE])
+        user, _ = idu.communicate()
+        idg = subprocess.Popen(["id", "-gn", stdout=subprocess.PIPE])
+        group, _ = idg.communicate()
+        user_group = user + ":" + group
+
         # Create run.sh script file
         run = open('run.sh', 'w')
         run.write(run_script)    
@@ -116,14 +122,13 @@ class TestSocialVPN(unittest.TestCase):
             subprocess.call(["sudo", "cp", ipop_dir+"/ipop-tincan-x86_64",\
               ipop_dir+"/svpn_controller.py", ipop_dir+"/ipoplib.py",\
               "config.json", "run.sh", path])
-            subprocess.call(["sudo", "chown", "ubuntu:ubuntu",\
-                            path+"/ipop-tincan-x86_64"])
-            subprocess.call(["sudo", "chown", "ubuntu:ubuntu",\
-                            path+"/svpn_controller.py"])
-            subprocess.call(["sudo", "chown", "ubuntu:ubuntu",\
-                            path+"/ipoplib.py"])
-            subprocess.call(["sudo", "chown", "ubuntu:ubuntu",\
-                            path+"/config.json"])
+
+            subprocess.call(["sudo", "chown", user_group, path + \
+                             "/ipop-tincan-x86_64"])
+            subprocess.call(["sudo", "chown", user_group, path + \
+                             "/svpn_controller.py"])
+            subprocess.call(["sudo", "chown", user_group, path+"/ipoplib.py"])
+            subprocess.call(["sudo", "chown", user_group, path+"/config.json"])
             subprocess.call(["sudo", "chmod", "+x",\
                             path+"/svpn_controller.py"])
             subprocess.call(["sudo", "chmod", "+x",\
