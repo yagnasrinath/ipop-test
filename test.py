@@ -96,10 +96,10 @@ class TestSocialVPN(unittest.TestCase):
         config["ip4"] = "172.31.0.100"
 
         idu = subprocess.Popen(["id", "-un"], stdout=subprocess.PIPE)
-        user, _ = idu.communicate().split("\n")
+        user, _ = idu.communicate()
         idg = subprocess.Popen(["id", "-gn"], stdout=subprocess.PIPE)
-        group, _ = idg.communicate().split("\n")
-        user_group = user + ":" + group
+        group, _ = idg.communicate()
+        user_group = user.split("\n") + ":" + group.split("\n")
 
         # Create run.sh script file
         run = open('run.sh', 'w')
