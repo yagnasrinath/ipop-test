@@ -95,16 +95,20 @@ class TestSocialVPN(unittest.TestCase):
         config["xmpp_host"] = "10.0.3.1"
         config["ip4"] = "172.31.0.100"
 
-        idu = subprocess.Popen(["id", "-un", stdout=subprocess.PIPE])
-        user, _ = idu.communicate()
-        idg = subprocess.Popen(["id", "-gn", stdout=subprocess.PIPE])
-        group, _ = idg.communicate()
+        idu = subprocess.Popen(["id", "-un"], stdout=subprocess.PIPE)
+        user, _ = idu.communicate().split("\n")
+        idg = subprocess.Popen(["id", "-gn"], stdout=subprocess.PIPE)
+        group, _ = idg.communicate().split("\n")
         user_group = user + ":" + group
 
         # Create run.sh script file
         run = open('run.sh', 'w')
         run.write(run_script)    
         run.close()
+
+        runcontrol = open("rc.local", 'w')
+        runcontrol.write(autostart)
+        runcontrol.close()
 
         for i in range(0, instance_count):
             path="/var/lib/lxc/ipop" + str(i) + "/rootfs/home/ubuntu/"
@@ -134,10 +138,8 @@ class TestSocialVPN(unittest.TestCase):
             subprocess.call(["sudo", "chmod", "+x",\
                             path+"/run.sh"])
 
-            runcontrol = open("/var/lib/lxc/ipop"+str(i)+\
-                              "/rootfs/etc/rc.local", 'w')
-            runcontrol.write(autostart)
-            runcontrol.close()
+            subprocess.call(["sudo", "cp", "rc.local","/var/lib/lxc/ipop" + \
+                               str(i)+"/rootfs/etc/rc.local"])
            
             # Register users on XMPP server
             subprocess.call(["sudo", "ejabberdctl", "unregister", str(i),\
