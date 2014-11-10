@@ -104,7 +104,7 @@ class TestSocialVPN(unittest.TestCase):
         arch = subprocess.Popen(["uname", "--hardware-platform"],\
                                  stdout=subprocess.PIPE)
         platform = arch.communicate()[0]
-        if platform.split[0] == "x86_64":
+        if platform.split("\n")[0] == "x86_64":
             subprocess.call(["sudo", "cp", ipop_dir+"/ipop-tincan-x86_64",\
               ipop_dir+"/ipop-tincan"])
         else:
