@@ -13,7 +13,7 @@ ipop_dir = "ipop-14.07.1.rc2-x86_ubuntu"
 run_script = """
 #!/usr/bin/env bash
 cd /home/ubuntu
-sudo ./ipop-tincan-x86_64 &> tincan.log &
+sudo ./ipop-tincan &> tincan.log &
 #Make sure the UDP socket is created at tincan first
 #If O/S overloaded, there is possibility of controller
 #starting socket connection first.
@@ -99,7 +99,17 @@ class TestSocialVPN(unittest.TestCase):
         user, _ = idu.communicate()
         idg = subprocess.Popen(["id", "-gn"], stdout=subprocess.PIPE)
         group, _ = idg.communicate()
-        user_group = user.split("\n") + ":" + group.split("\n")
+        user_group = user.split("\n")[0] + ":" + group.split("\n")[0]
+
+        arch = subprocess.Popen(["uname", "--hardware-platform"],\
+                                 stdout=subprocess.PIPE)
+        platform = idu.communicate()[0]
+        if platform.split[0] == "x86_64":
+            subprocess.call(["sudo", "cp", ipop_dir+"/ipop-tincan-x86_64",\
+              ipop_dir+"/ipop-tincan"])
+        else:
+            subprocess.call(["sudo", "cp", ipop_dir+"/ipop-tincan-i686",\
+              ipop_dir+"/ipop-tincan"])
 
         # Create run.sh script file
         run = open('run.sh', 'w')
@@ -123,12 +133,12 @@ class TestSocialVPN(unittest.TestCase):
             configfile.close()
             # Copies ipop-tincan, svpn_controller, config.json, run.sh files
             # to each isntance FS
-            subprocess.call(["sudo", "cp", ipop_dir+"/ipop-tincan-x86_64",\
+            subprocess.call(["sudo", "cp", ipop_dir+"/ipop-tincan",\
               ipop_dir+"/svpn_controller.py", ipop_dir+"/ipoplib.py",\
               "config.json", "run.sh", path])
 
             subprocess.call(["sudo", "chown", user_group, path + \
-                             "/ipop-tincan-x86_64"])
+                             "/ipop-tincan"])
             subprocess.call(["sudo", "chown", user_group, path + \
                              "/svpn_controller.py"])
             subprocess.call(["sudo", "chown", user_group, path+"/ipoplib.py"])
@@ -160,7 +170,7 @@ class TestSocialVPN(unittest.TestCase):
     def test_copy(self):
         for i in range(0, instance_count):
             path="/var/lib/lxc/ipop" + str(i) + "/rootfs/home/ubuntu/"
-            ret = subprocess.call(["sudo", "ls", path+"ipop-tincan-x86_64",\
+            ret = subprocess.call(["sudo", "ls", path+"ipop-tincan",\
                   path+"config.json", path+"/ipoplib.py",\
                   path+"svpn_controller.py", path+"run.sh"])
             self.assertTrue(ret == 0)
