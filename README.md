@@ -44,6 +44,7 @@ Usage instruction
   ```
 
   When XMPP/LXC is not installed in VM before, this command takes more than 10 minutes. But, if it is, it only takes several minutes.
+  
   It should complete with this output.
   
   ```
