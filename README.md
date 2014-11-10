@@ -43,10 +43,13 @@ Usage instruction
   python -m unittest -v test.TestInstall
   ```
 
-  This command should complete with this output
+  When XMPP/LXC is not installed in VM before, this command takes more than 10 minutes. But, if it is, it only takes several minutes.
+  
+  It should complete with this output.
+  
   ```
   ----------------------------------------------------------------------
-  Ran 2 tests in 86.865s
+  Ran 2 tests in 1094.594s
 
   OK
   ```
