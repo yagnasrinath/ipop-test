@@ -65,7 +65,7 @@ class TestLxcCreate(unittest.TestCase):
         subprocess.call(["sudo", "chroot", "/var/lib/lxc/ipop0/rootfs",\
                          "apt-get", "update"])
         subprocess.call(["sudo", "chroot", "/var/lib/lxc/ipop0/rootfs",\
-                         "apt-get", "install", "-y", "python"])
+                         "apt-get", "install", "-y", "python-keyring"])
         subprocess.call(["sudo", "chroot", "/var/lib/lxc/ipop0/rootfs",\
                          "mkdir", "/dev/net"])
         subprocess.call(["sudo", "chroot", "/var/lib/lxc/ipop0/rootfs",\
